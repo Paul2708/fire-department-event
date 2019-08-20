@@ -1,8 +1,10 @@
 package de.paul2708.event.controller;
 
+import de.paul2708.event.view.AddOperationView;
 import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.util.List;
@@ -16,6 +18,16 @@ import java.util.List;
 public final class ApplicationController {
 
     private static final String MP3_EXTENSION = "mp3";
+
+    private AddOperationView operationView;
+
+    @FXML
+    private AnchorPane root;
+
+    @FXML
+    private void initialize() {
+        this.operationView = new AddOperationView();
+    }
 
     /**
      * Check if the dropped file is a <code>mp3</code> file and add it to the list.
@@ -31,7 +43,8 @@ public final class ApplicationController {
             return;
         }
 
-        // TODO: Open operation dialog
+        operationView.initialize(root.getScene().getWindow());
+        operationView.show();
     }
 
     /**
