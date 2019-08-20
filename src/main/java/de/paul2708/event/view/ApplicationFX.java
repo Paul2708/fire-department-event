@@ -1,6 +1,5 @@
-package de.paul2708.event.view.impl;
+package de.paul2708.event.view;
 
-import de.paul2708.event.view.ApplicationView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,18 +10,17 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * This class is a JavaFX-{@link Application} and implements the {@link ApplicationView}.
+ * This class is a JavaFX-{@link Application} and the main application.
  *
  * @author Paul2708
  */
-public final class ApplicationFX extends Application implements ApplicationView {
+public final class ApplicationFX extends Application {
 
     private static final String MAIN_FXML_PATH = "application.fxml";
 
     /**
-     * Launch the application and show it to the user.
+     * Launch the application.
      */
-    @Override
     public void launch() {
         Application.launch();
     }
@@ -32,7 +30,6 @@ public final class ApplicationFX extends Application implements ApplicationView 
      *
      * @param primaryStage primary stage
      * @throws IOException if loading the layout file throws any errors
-     * @see #launch()
      */
     @Override
     public void start(Stage primaryStage) throws IOException {

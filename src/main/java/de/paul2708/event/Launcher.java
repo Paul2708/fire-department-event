@@ -1,6 +1,6 @@
 package de.paul2708.event;
 
-import de.paul2708.event.view.ApplicationView;
+import de.paul2708.event.view.ApplicationFX;
 
 /**
  * This class holds the main method and runs the application.
@@ -22,8 +22,7 @@ public final class Launcher {
      * @param args ignored command line arguments
      */
     public static void main(String[] args) {
-        ApplicationView view = ApplicationView.by();
-
-        view.launch();
+        ApplicationFX application = new ApplicationFX();
+        application.launch();
     }
 }
