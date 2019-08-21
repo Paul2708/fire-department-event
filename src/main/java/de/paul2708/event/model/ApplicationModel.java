@@ -15,4 +15,13 @@ public interface ApplicationModel {
      * @return repository
      */
     Repository getRepository();
+
+    /**
+     * Get the application model implementation.
+     *
+     * @return implementation
+     */
+    static ApplicationModel by() {
+        return DefaultApplicationModel.getInstance();
+    }
 }
