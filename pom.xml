@@ -10,11 +10,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.12</junit.version>
     </properties>
 
-    <name>nitrado-odyssey</name>
-    <description>Minecraft Odyssey-Project</description>
-    <inceptionYear>2018</inceptionYear>
+    <name>fire-department-event</name>
+    <description>An application to organize and control fire department operations for children.</description>
+    <inceptionYear>2019</inceptionYear>
 
     <developers>
         <developer>
@@ -22,6 +23,16 @@
             <email>paul.hoger@gmx.net</email>
         </developer>
     </developers>
+
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -37,5 +48,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
