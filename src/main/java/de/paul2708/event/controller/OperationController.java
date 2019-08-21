@@ -1,13 +1,15 @@
 package de.paul2708.event.controller;
 
+import de.paul2708.event.model.ApplicationModel;
+import de.paul2708.event.model.Operation;
+import de.paul2708.event.model.repository.Repository;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
-import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 
 /**
  * This class represents the controller for {@link de.paul2708.event.view.AddOperationView} and adds the operation
@@ -54,7 +56,33 @@ public final class OperationController {
      */
     @FXML
     private void add() {
-        // TODO: Implement me
+        try {
+            requireValue(nameField.getText());
+            requireValue(datePicker.getValue());
+            requireValue(hoursBox.getValue());
+            requireValue(minutesBox.getValue());
+        } catch (IllegalArgumentException e) {
+            // TODO: Better error handling
+            new Alert(Alert.AlertType.ERROR, "Bitte alle Felder ausfüllen.", ButtonType.OK)
+                    .showAndWait();
+            return;
+        }
+
+        // TODO: Add additional checks
+
+        LocalDateTime localDateTime = LocalDateTime.of(
+                datePicker.getValue(),
+                LocalTime.of(hoursBox.getValue(), minutesBox.getValue())
+        );
+        long timestamp = localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+
+        // Insert operation
+        Repository repository = ApplicationModel.by().getRepository();
+        repository.insert(new Operation(pathField.getText(), nameField.getText(), timestamp));
+
+        // Close window
+        Stage stage = (Stage) button.getScene().getWindow();
+        stage.close();
     }
 
     /**
@@ -64,5 +92,17 @@ public final class OperationController {
      */
     public void setPath(String path) {
         pathField.setText(path);
+    }
+
+    /**
+     * Check if the value is present.
+     *
+     * @param value value to check
+     * @throws IllegalArgumentException if the value is not present
+     */
+    private static void requireValue(Object value) {
+        if (value == null) {
+            throw new IllegalArgumentException("Value cannot be null.");
+        }
     }
 }
