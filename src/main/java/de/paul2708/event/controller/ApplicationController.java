@@ -17,6 +17,8 @@ import java.util.List;
  */
 public final class ApplicationController {
 
+    // TODO: Fix drag and drop detection
+
     private static final String MP3_EXTENSION = "mp3";
 
     private AddOperationView operationView;
@@ -44,7 +46,7 @@ public final class ApplicationController {
         }
 
         operationView.initialize(root.getScene().getWindow());
-        operationView.show();
+        operationView.show(files.get(0).getPath());
     }
 
     /**

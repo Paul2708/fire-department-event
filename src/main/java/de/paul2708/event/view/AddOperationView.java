@@ -1,5 +1,6 @@
 package de.paul2708.event.view;
 
+import de.paul2708.event.controller.OperationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,8 @@ public final class AddOperationView {
 
     private static final String OPERATION_FXML_PATH = "add_operation.fxml";
 
+    private OperationController controller;
+
     private Stage stage;
 
     /**
@@ -35,7 +38,10 @@ public final class AddOperationView {
 
         Parent root;
         try {
-            root = FXMLLoader.load(url);
+            FXMLLoader loader = new FXMLLoader(url);
+            root = loader.load();
+
+            this.controller = loader.getController();
         } catch (IOException e) {
             throw new RuntimeException("Failed to load " + AddOperationView.OPERATION_FXML_PATH);
         }
@@ -54,8 +60,12 @@ public final class AddOperationView {
 
     /**
      * Show the stage to the user.
+     *
+     * @param path dropped mp3 file path
      */
-    public void show() {
+    public void show(String path) {
+        controller.setPath(path);
+
         stage.show();
     }
 }
