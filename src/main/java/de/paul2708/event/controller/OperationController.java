@@ -6,6 +6,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
+
 /**
  * This class represents the controller for {@link de.paul2708.event.view.AddOperationView} and adds the operation
  * to the list.
@@ -44,15 +47,6 @@ public final class OperationController {
         for (int i = 0; i <= 59; i++) {
             minutesBox.getItems().add(i);
         }
-    }
-
-    /**
-     * Called if the user picks the date.
-     * Validate the date.
-     */
-    @FXML
-    private void pickDate() {
-        // TODO: Check date
     }
 
     /**
