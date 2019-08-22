@@ -80,6 +80,8 @@ public final class OperationController {
         Repository repository = ApplicationModel.by().getRepository();
         repository.insert(new Operation(pathField.getText(), nameField.getText(), timestamp));
 
+        ApplicationModel.by().notifyObservers();
+
         // Close window
         Stage stage = (Stage) button.getScene().getWindow();
         stage.close();

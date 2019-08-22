@@ -1,5 +1,6 @@
 package de.paul2708.event.controller;
 
+import de.paul2708.event.model.ApplicationModel;
 import de.paul2708.event.view.AddOperationView;
 import javafx.fxml.FXML;
 import javafx.scene.input.DragEvent;
@@ -8,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * This class represents the controller in MVC and handles input events (like drag-and-drop) from the user.
@@ -15,7 +18,7 @@ import java.util.List;
  *
  * @author Paul2708
  */
-public final class ApplicationController {
+public final class ApplicationController implements Observer {
 
     // TODO: Fix drag and drop detection
 
@@ -29,6 +32,8 @@ public final class ApplicationController {
     @FXML
     private void initialize() {
         this.operationView = new AddOperationView();
+
+        ApplicationModel.by().addObserver(this);
     }
 
     /**
@@ -47,6 +52,20 @@ public final class ApplicationController {
 
         operationView.initialize(root.getScene().getWindow());
         operationView.show(files.get(0).getPath());
+    }
+
+    /**
+     * This method is called whenever the observed object is changed.
+     * An application calls an <tt>Observable</tt> object's
+     * <code>notifyObservers</code> method to have all the object's
+     * observers notified of the change.
+     *
+     * @param observable the observable object.
+     * @param arg        an argument passed to the <code>notifyObservers</code>
+     */
+    @Override
+    public void update(Observable observable, Object arg) {
+        // TODO: Update ui
     }
 
     /**
