@@ -3,7 +3,9 @@ package de.paul2708.event.controller;
 import de.paul2708.event.model.ApplicationModel;
 import de.paul2708.event.model.Operation;
 import de.paul2708.event.model.observer.UpdateReason;
+import de.paul2708.event.view.AbstractView;
 import de.paul2708.event.view.AddOperationView;
+import de.paul2708.event.view.EditOperationView;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
@@ -27,7 +29,8 @@ public final class ApplicationController implements Observer {
 
     private static final String MP3_EXTENSION = "mp3";
 
-    private AddOperationView operationView;
+    private AbstractView<AddOperationController> addOperationView;
+    private AbstractView<EditOperationController> editOperationView;
 
     private ApplicationModel applicationModel;
 
@@ -40,7 +43,8 @@ public final class ApplicationController implements Observer {
     @FXML
     private void initialize() {
         // Initialize view and observer
-        this.operationView = new AddOperationView();
+        this.addOperationView = new AddOperationView();
+        this.editOperationView = new EditOperationView();
 
         this.applicationModel = ApplicationModel.by();
 
@@ -50,7 +54,8 @@ public final class ApplicationController implements Observer {
         // TODO: Out source it?
         MenuItem editItem = new MenuItem("Bearbeiten...");
         editItem.setOnAction(event -> {
-            // TODO: Implement me
+            editOperationView.initialize(root.getScene().getWindow());
+            editOperationView.show(controller -> getSelectedOperation().ifPresent(controller::setOperation));
         });
         MenuItem deleteItem = new MenuItem("Entfernen");
         deleteItem.setOnAction(event ->  {
@@ -86,8 +91,8 @@ public final class ApplicationController implements Observer {
             return;
         }
 
-        operationView.initialize(root.getScene().getWindow());
-        operationView.show(addOperationController -> addOperationController.setPath(files.get(0).getPath()));
+        addOperationView.initialize(root.getScene().getWindow());
+        addOperationView.show(addOperationController -> addOperationController.setPath(files.get(0).getPath()));
     }
 
     /**

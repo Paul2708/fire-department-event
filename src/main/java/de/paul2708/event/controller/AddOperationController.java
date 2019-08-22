@@ -75,7 +75,7 @@ public final class AddOperationController {
                 datePicker.getValue(),
                 LocalTime.of(hoursBox.getValue(), minutesBox.getValue())
         );
-        long timestamp = localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        long timestamp = localDateTime.toInstant(ZoneOffset.ofHours(2)).toEpochMilli();
 
         // Insert operation
         Repository repository = ApplicationModel.by().getRepository();
