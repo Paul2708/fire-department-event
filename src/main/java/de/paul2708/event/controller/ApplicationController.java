@@ -5,7 +5,9 @@ import de.paul2708.event.model.Operation;
 import de.paul2708.event.model.observer.UpdateReason;
 import de.paul2708.event.view.AddOperationView;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.layout.AnchorPane;
@@ -27,6 +29,8 @@ public final class ApplicationController implements Observer {
 
     private AddOperationView operationView;
 
+    private ApplicationModel applicationModel;
+
     @FXML
     private AnchorPane root;
 
@@ -35,12 +39,37 @@ public final class ApplicationController implements Observer {
 
     @FXML
     private void initialize() {
+        // Initialize view and observer
         this.operationView = new AddOperationView();
+
+        this.applicationModel = ApplicationModel.by();
 
         ApplicationModel.by().addObserver(this);
 
+        // Create list context
+        // TODO: Out source it?
+        MenuItem editItem = new MenuItem("Bearbeiten...");
+        editItem.setOnAction(event -> {
+            // TODO: Implement me
+        });
+        MenuItem deleteItem = new MenuItem("Entfernen");
+        deleteItem.setOnAction(event ->  {
+            Optional<Operation> optional = getSelectedOperation();
+
+            if (optional.isPresent()) {
+                applicationModel.getRepository().delete(optional.get());
+                applicationModel.notifyObservers(UpdateReason.OPERATION_UPDATE);
+            }
+        });
+
+        ContextMenu contextMenu = new ContextMenu(editItem, deleteItem);
+
+        operationListView.setOnContextMenuRequested(event -> {
+            contextMenu.show(operationListView, event.getScreenX(), event.getScreenY());
+        });
+
         // Load operations
-        ApplicationModel.by().notifyObservers(UpdateReason.OPERATION_UPDATE);
+        applicationModel.notifyObservers(UpdateReason.OPERATION_UPDATE);
     }
 
     /**
@@ -76,7 +105,7 @@ public final class ApplicationController implements Observer {
 
         switch (reason) {
             case OPERATION_UPDATE:
-                List<Operation> operationList = ApplicationModel.by().getRepository().selectAll();
+                List<Operation> operationList = applicationModel.getRepository().selectAll();
                 List<Operation> sortedList = new ArrayList<>(operationList);
                 Collections.sort(sortedList);
 
@@ -85,6 +114,15 @@ public final class ApplicationController implements Observer {
             default:
                 break;
         }
+    }
+
+    /**
+     * Get the selected operation from list view.
+     *
+     * @return optional operation
+     */
+    private Optional<Operation> getSelectedOperation() {
+        return Optional.ofNullable(operationListView.getSelectionModel().getSelectedItem());
     }
 
     /**
