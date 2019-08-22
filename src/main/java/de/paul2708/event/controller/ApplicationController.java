@@ -1,16 +1,17 @@
 package de.paul2708.event.controller;
 
 import de.paul2708.event.model.ApplicationModel;
+import de.paul2708.event.model.Operation;
+import de.paul2708.event.model.observer.UpdateReason;
 import de.paul2708.event.view.AddOperationView;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * This class represents the controller in MVC and handles input events (like drag-and-drop) from the user.
@@ -30,10 +31,16 @@ public final class ApplicationController implements Observer {
     private AnchorPane root;
 
     @FXML
+    private ListView<Operation> operationListView;
+
+    @FXML
     private void initialize() {
         this.operationView = new AddOperationView();
 
         ApplicationModel.by().addObserver(this);
+
+        // Load operations
+        ApplicationModel.by().notifyObservers(UpdateReason.OPERATION_UPDATE);
     }
 
     /**
@@ -65,7 +72,19 @@ public final class ApplicationController implements Observer {
      */
     @Override
     public void update(Observable observable, Object arg) {
-        // TODO: Update ui
+        UpdateReason reason = (UpdateReason) arg;
+
+        switch (reason) {
+            case OPERATION_UPDATE:
+                List<Operation> operationList = ApplicationModel.by().getRepository().selectAll();
+                List<Operation> sortedList = new ArrayList<>(operationList);
+                Collections.sort(sortedList);
+
+                this.operationListView.getItems().setAll(sortedList);
+                break;
+            default:
+                break;
+        }
     }
 
     /**

@@ -42,7 +42,7 @@
                                     </Label>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ListView fx:id="operations" layoutX="38.0" layoutY="68.0" onDragExited="#handleDroppedDrag" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
+                                          <ListView fx:id="operationListView" layoutX="38.0" layoutY="68.0" onDragExited="#handleDroppedDrag" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>

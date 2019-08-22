@@ -2,6 +2,7 @@ package de.paul2708.event.controller;
 
 import de.paul2708.event.model.ApplicationModel;
 import de.paul2708.event.model.Operation;
+import de.paul2708.event.model.observer.UpdateReason;
 import de.paul2708.event.model.repository.Repository;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -80,7 +81,7 @@ public final class OperationController {
         Repository repository = ApplicationModel.by().getRepository();
         repository.insert(new Operation(pathField.getText(), nameField.getText(), timestamp));
 
-        ApplicationModel.by().notifyObservers();
+        ApplicationModel.by().notifyObservers(UpdateReason.OPERATION_UPDATE);
 
         // Close window
         Stage stage = (Stage) button.getScene().getWindow();
