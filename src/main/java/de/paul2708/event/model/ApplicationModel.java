@@ -21,6 +21,19 @@ public abstract class ApplicationModel extends Observable {
     public abstract Repository getRepository();
 
     /**
+     * Set and clear the changed state before and after calling {@link super#notifyObservers(Object)}.
+     * The observers will only be notified, if something changed.
+     *
+     * @param arg {@link de.paul2708.event.model.observer.UpdateReason} argument
+     */
+    @Override
+    public void notifyObservers(Object arg) {
+        setChanged();
+        super.notifyObservers(arg);
+        clearChanged();
+    }
+
+    /**
      * Get the application model implementation.
      *
      * @return implementation
@@ -28,7 +41,6 @@ public abstract class ApplicationModel extends Observable {
     public static ApplicationModel by() {
         if (ApplicationModel.instance == null) {
             ApplicationModel.instance = new DefaultApplicationModel();
-            ApplicationModel.instance.setChanged();
         }
 
         return ApplicationModel.instance;
