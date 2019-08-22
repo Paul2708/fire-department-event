@@ -87,7 +87,7 @@ public final class ApplicationController implements Observer {
         }
 
         operationView.initialize(root.getScene().getWindow());
-        operationView.show(files.get(0).getPath());
+        operationView.show(addOperationController -> addOperationController.setPath(files.get(0).getPath()));
     }
 
     /**
