@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author Paul2708
  */
-public final class Operation implements Serializable {
+public final class Operation implements Serializable, Comparable<Operation> {
 
     private final String path;
     private final String name;
@@ -110,5 +110,19 @@ public final class Operation implements Serializable {
         int result = path != null ? path.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    /**
+     * Compare two operations by timestamp.
+     * It will compare the following:
+     * <p>
+     * <code>a.time < b.time => a < b</code>
+     *
+     * @param operation operation to compare with
+     * @return the "earlier" operation
+     */
+    @Override
+    public int compareTo(Operation operation) {
+        return Long.compare(this.executeTime, operation.executeTime);
     }
 }
