@@ -1,5 +1,6 @@
 package de.paul2708.event.model;
 
+import de.paul2708.event.model.observer.UpdateReason;
 import de.paul2708.event.model.repository.FileRepository;
 import de.paul2708.event.model.repository.Repository;
 
@@ -27,5 +28,24 @@ public final class DefaultApplicationModel extends ApplicationModel {
     @Override
     public Repository getRepository() {
         return repository;
+    }
+
+    /**
+     * Update all unfinished operations by a diff of time and notify the observers.
+     *
+     * @param operation changed operation (every operation that follows this will be updated)
+     * @param diff      difference in milliseconds
+     */
+    @Override
+    public void update(Operation operation, long diff) {
+        for (Operation singleOperation : repository.selectAll()) {
+            if (singleOperation.getExecutionTime() >= operation.getExecutionTime()) {
+                singleOperation.setExecutionTime(singleOperation.getExecutionTime() + diff);
+
+                repository.update(singleOperation);
+            }
+        }
+
+        notifyObservers(UpdateReason.OPERATION_UPDATE);
     }
 }

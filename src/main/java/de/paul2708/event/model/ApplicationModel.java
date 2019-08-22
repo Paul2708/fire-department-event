@@ -21,6 +21,14 @@ public abstract class ApplicationModel extends Observable {
     public abstract Repository getRepository();
 
     /**
+     * Update all unfinished operations by a diff of time and notify the observers.
+     *
+     * @param operation changed operation (every operation that follows this will be updated)
+     * @param diff difference in milliseconds
+     */
+    public abstract void update(Operation operation, long diff);
+
+    /**
      * Set and clear the changed state before and after calling {@link super#notifyObservers(Object)}.
      * The observers will only be notified, if something changed.
      *
