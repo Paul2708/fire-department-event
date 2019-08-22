@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="235.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.paul2708.event.controller.EditOperationController">
+   <children>
+      <Label layoutX="150.0" layoutY="40.0" text="Einsatz bearbeiten" underline="true" AnchorPane.leftAnchor="150.0" />
+      <TextField fx:id="timeField" layoutX="103.0" layoutY="79.0" prefHeight="26.0" prefWidth="290.0" AnchorPane.rightAnchor="8.0" />
+      <DatePicker fx:id="datePicker" editable="false" layoutX="100.0" layoutY="112.0" prefHeight="26.0" prefWidth="290.0" AnchorPane.rightAnchor="8.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="6.0" layoutY="83.0" prefHeight="18.0" prefWidth="78.0" text="Aktuelle Zeit:" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="316.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="6.0" layoutY="116.0" prefHeight="18.0" prefWidth="78.0" text="Neues Datum:" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="316.0" />
+      <ComboBox fx:id="hoursBox" layoutX="100.0" layoutY="149.0" prefHeight="26.0" prefWidth="87.0" AnchorPane.rightAnchor="212.0" />
+      <Label layoutX="236.0" layoutY="152.0" text=":">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="minutesBox" layoutX="238.0" layoutY="148.0" prefHeight="26.0" prefWidth="87.0" AnchorPane.rightAnchor="8.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="8.0" layoutY="151.0" prefHeight="18.0" prefWidth="78.0" text="Neue Uhrzeit:" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="314.0" />
+      <Button fx:id="button" layoutX="163.0" layoutY="195.0" mnemonicParsing="false" onAction="#edit" text="Bearbeiten" />
+   </children>
+</AnchorPane>
