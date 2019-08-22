@@ -18,7 +18,7 @@ import java.time.ZoneOffset;
  *
  * @author Paul2708
  */
-public final class OperationController {
+public final class AddOperationController {
 
     @FXML
     private TextField pathField;

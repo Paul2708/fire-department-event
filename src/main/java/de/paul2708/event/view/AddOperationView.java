@@ -1,6 +1,6 @@
 package de.paul2708.event.view;
 
-import de.paul2708.event.controller.OperationController;
+import de.paul2708.event.controller.AddOperationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,7 +20,7 @@ public final class AddOperationView {
 
     private static final String OPERATION_FXML_PATH = "add_operation.fxml";
 
-    private OperationController controller;
+    private AddOperationController controller;
 
     private Stage stage;
 
