@@ -1,6 +1,8 @@
 package de.paul2708.event.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -10,6 +12,8 @@ import java.util.Objects;
  * @author Paul2708
  */
 public final class Operation implements Serializable, Comparable<Operation> {
+
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd - HH:mm");
 
     private final String path;
     private final String name;
@@ -35,6 +39,15 @@ public final class Operation implements Serializable, Comparable<Operation> {
      */
     public void setExecutionTime(long executeTime) {
         this.executeTime = executeTime;
+    }
+
+    /**
+     * Get the timestamp as formatted and readable string.
+     *
+     * @return timestamp as string
+     */
+    public String getFormattedTime() {
+        return Operation.DATE_FORMAT.format(new Date(executeTime));
     }
 
     /**
