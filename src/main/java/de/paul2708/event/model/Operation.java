@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public final class Operation implements Serializable, Comparable<Operation> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd - HH:mm");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
 
     private final String path;
     private final String name;
@@ -85,7 +85,7 @@ public final class Operation implements Serializable, Comparable<Operation> {
      */
     @Override
     public String toString() {
-        return name;
+        return "[" + getFormattedTime() + "] " + name;
     }
 
     /**
