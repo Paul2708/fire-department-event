@@ -20,6 +20,8 @@ import java.util.function.Consumer;
  */
 public abstract class AbstractView<T> {
 
+    // TODO: Fix layouts
+
     private final String path;
     private final String title;
 
@@ -33,7 +35,7 @@ public abstract class AbstractView<T> {
      * @param path  fxml path to layout resource
      * @param title scene title
      */
-    public AbstractView(String path, String title) {
+    AbstractView(String path, String title) {
         this.path = path;
         this.title = title;
     }

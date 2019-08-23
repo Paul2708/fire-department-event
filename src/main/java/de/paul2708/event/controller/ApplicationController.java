@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.layout.AnchorPane;
@@ -41,6 +42,15 @@ public final class ApplicationController implements Observer {
     private ListView<Operation> operationListView;
 
     @FXML
+    private TextField countdownField;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField durationField;
+
+    @FXML
     private void initialize() {
         // Initialize view and observer
         this.addOperationView = new AddOperationView();
@@ -48,7 +58,7 @@ public final class ApplicationController implements Observer {
 
         this.applicationModel = ApplicationModel.by();
 
-        ApplicationModel.by().addObserver(this);
+        applicationModel.addObserver(this);
 
         // Create list context
         // TODO: Out source it?

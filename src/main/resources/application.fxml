@@ -65,7 +65,7 @@
                                                       <Insets />
                                                    </VBox.margin>
                                                 </Label>
-                                                <TextField alignment="CENTER" editable="false" text="00 Stunden 00 Minuten 00 Sekunden">
+                                                <TextField alignment="CENTER" editable="false" text="00 Stunden 00 Minuten 00 Sekunden" fx:id="countdownField">
                                                    <VBox.margin>
                                                       <Insets left="16.0" right="16.0" top="32.0" />
                                                    </VBox.margin>
@@ -96,9 +96,9 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Name:" />
-                                                            <TextField alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="Katze steckt auf Baum fest" GridPane.columnIndex="1" />
+                                                            <TextField alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="Katze steckt auf Baum fest" GridPane.columnIndex="1" fx:id="nameField"/>
                                                             <Label text="Dauer:" GridPane.rowIndex="1" />
-                                                            <TextField alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="00 Stunden 00 Minuten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="00 Stunden 00 Minuten" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="durationField"/>
                                                          </children>
                                                       </GridPane>
                                                    </children>
