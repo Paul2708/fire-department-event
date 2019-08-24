@@ -58,8 +58,9 @@ public final class ApplicationController implements Observer {
         this.editOperationView = new EditOperationView();
 
         this.applicationModel = ApplicationModel.by();
-
         applicationModel.addObserver(this);
+
+        applicationModel.start();
 
         // Create list context
         // TODO: Out source it?
@@ -83,10 +84,6 @@ public final class ApplicationController implements Observer {
         operationListView.setOnContextMenuRequested(event -> {
             contextMenu.show(operationListView, event.getScreenX(), event.getScreenY());
         });
-
-        // Load operations
-        // TODO: Update
-        // applicationModel.notifyObservers(UpdateReason.OPERATION_UPDATE);
     }
 
     /**
@@ -132,6 +129,12 @@ public final class ApplicationController implements Observer {
                 operationListView.getItems().remove(removed);
 
                 Collections.sort(operationListView.getItems());
+                break;
+            case STARTUP:
+                List<Operation> operations = (List<Operation>) update.getArguments()[0];
+
+                operationListView.getItems().clear();
+                operationListView.getItems().addAll(operations);
                 break;
             default:
                 break;

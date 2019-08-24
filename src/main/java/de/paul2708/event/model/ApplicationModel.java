@@ -21,6 +21,11 @@ public abstract class ApplicationModel extends Observable {
     public abstract Repository getRepository();
 
     /**
+     * Start the model and notify the observers.
+     */
+    public abstract void start();
+
+    /**
      * Update all unfinished operations by a diff of time and notify the observers.
      *
      * @param operation changed operation (every operation that follows this will be updated)
