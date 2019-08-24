@@ -124,12 +124,16 @@ public final class ApplicationController implements Observer {
                 operationListView.getItems().add(added);
 
                 Collections.sort(operationListView.getItems());
+
+                applicationModel.onOperationUpdate();
                 break;
             case OPERATION_REMOVED:
                 Operation removed = (Operation) update.getArguments()[0];
                 operationListView.getItems().remove(removed);
 
                 Collections.sort(operationListView.getItems());
+
+                applicationModel.onOperationUpdate();
                 break;
             case OPERATION_UPDATE:
                 operationListView.getItems().clear();

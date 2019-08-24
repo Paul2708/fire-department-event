@@ -93,18 +93,29 @@ public final class DefaultApplicationModel extends ApplicationModel {
     }
 
     /**
+     * Called if operations were added or removed.
+     */
+    @Override
+    public void onOperationUpdate() {
+        List<Operation> operations = new ArrayList<>(repository.selectAll());
+        Collections.sort(operations);
+
+        updateLocalOperations(operations);
+    }
+
+    /**
      * Update local operations (current operation, next operation) by list of operations.
      *
      * @param operations sorted list of all operations
      */
     private void updateLocalOperations(List<Operation> operations) {
+        this.nextOperation = null;
+        this.currentOperation = null;
+
         for (int i = 0; i < operations.size(); i++) {
             if (operations.get(i).getExecutionTime() >= System.currentTimeMillis()) {
                 this.nextOperation = operations.get(i);
-
-                if (i > 0) {
-                    this.currentOperation = operations.get(i - 1);
-                }
+                this.currentOperation = i > 0 ? operations.get(i - 1) : null;
 
                 break;
             }

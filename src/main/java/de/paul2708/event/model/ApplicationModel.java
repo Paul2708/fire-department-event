@@ -34,6 +34,11 @@ public abstract class ApplicationModel extends Observable {
     public abstract void update(Operation operation, long diff);
 
     /**
+     * Called if operations were added or removed.
+     */
+    public abstract void onOperationUpdate();
+
+    /**
      * Set and clear the changed state before and after calling {@link super#notifyObservers(Object)}.
      * The observers will only be notified, if something changed.
      *
