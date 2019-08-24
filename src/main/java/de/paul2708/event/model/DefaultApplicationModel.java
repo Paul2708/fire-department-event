@@ -18,6 +18,9 @@ public final class DefaultApplicationModel extends ApplicationModel {
 
     private final Repository repository;
 
+    private Operation currentOperation;
+    private Operation nextOperation;
+
     /**
      * Create a new default application model implementation.
      */
@@ -43,7 +46,26 @@ public final class DefaultApplicationModel extends ApplicationModel {
         List<Operation> operations = new ArrayList<>(repository.selectAll());
         Collections.sort(operations);
 
+        updateLocalOperations(operations);
+
         notifyObservers(new Update(UpdateReason.STARTUP, operations));
+
+        new Thread(() -> {
+            while (true) {
+                if (nextOperation == null) {
+                    notifyObservers(new Update(UpdateReason.UPDATE_COUNTDOWN, -1L));
+                } else {
+                    long diff = nextOperation.getExecutionTime() - System.currentTimeMillis();
+                    notifyObservers(new Update(UpdateReason.UPDATE_COUNTDOWN, diff));
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**
@@ -65,6 +87,27 @@ public final class DefaultApplicationModel extends ApplicationModel {
         List<Operation> operations = new ArrayList<>(repository.selectAll());
         Collections.sort(operations);
 
+        updateLocalOperations(operations);
+
         notifyObservers(new Update(UpdateReason.OPERATION_UPDATE, operations));
+    }
+
+    /**
+     * Update local operations (current operation, next operation) by list of operations.
+     *
+     * @param operations sorted list of all operations
+     */
+    private void updateLocalOperations(List<Operation> operations) {
+        for (int i = 0; i < operations.size(); i++) {
+            if (operations.get(i).getExecutionTime() >= System.currentTimeMillis()) {
+                this.nextOperation = operations.get(i);
+
+                if (i > 0) {
+                    this.currentOperation = operations.get(i - 1);
+                }
+
+                break;
+            }
+        }
     }
 }

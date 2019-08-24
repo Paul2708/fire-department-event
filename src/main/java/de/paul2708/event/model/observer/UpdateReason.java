@@ -30,5 +30,12 @@ public enum UpdateReason {
      * The model was started.
      * Arguments: sorted list of operations
      */
-    STARTUP
+    STARTUP,
+
+    /**
+     * Called every second.
+     * Update the countdown.
+     * Arguments: -1 if none next operation is known otherwise seconds till next operation
+     */
+    UPDATE_COUNTDOWN
 }

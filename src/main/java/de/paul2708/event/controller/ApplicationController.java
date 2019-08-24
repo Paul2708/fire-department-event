@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class represents the controller in MVC and handles input events (like drag-and-drop) from the user.
@@ -138,6 +139,22 @@ public final class ApplicationController implements Observer {
                 operationListView.getItems().clear();
                 operationListView.getItems().addAll((List<Operation>) update.getArguments()[0]);
                 break;
+            case UPDATE_COUNTDOWN:
+                long countdown = (long) update.getArguments()[0];
+
+                if (countdown == -1) {
+                    countdownField.setText("keine nächster Einsatz bekannt");
+                } else {
+                    String formattedCountdown = String.format("%02d Stunden %02d Minuten %02d Sekunden",
+                            TimeUnit.MILLISECONDS.toHours(countdown),
+                            TimeUnit.MILLISECONDS.toMinutes(countdown)
+                                    - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(countdown)),
+                            TimeUnit.MILLISECONDS.toSeconds(countdown)
+                                    - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(countdown))
+                    );
+
+                    countdownField.setText(formattedCountdown);
+                }
             default:
                 break;
         }
