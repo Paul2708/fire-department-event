@@ -46,6 +46,7 @@ public final class DefaultApplicationModel extends ApplicationModel {
             }
         }
 
-        notifyObservers(UpdateReason.OPERATION_UPDATE);
+        // TODO: Update
+        // notifyObservers(UpdateReason.OPERATION_UPDATE);
     }
 }

@@ -2,6 +2,7 @@ package de.paul2708.event.controller;
 
 import de.paul2708.event.model.ApplicationModel;
 import de.paul2708.event.model.Operation;
+import de.paul2708.event.model.observer.Update;
 import de.paul2708.event.model.observer.UpdateReason;
 import de.paul2708.event.view.AbstractView;
 import de.paul2708.event.view.AddOperationView;
@@ -73,7 +74,7 @@ public final class ApplicationController implements Observer {
 
             if (optional.isPresent()) {
                 applicationModel.getRepository().delete(optional.get());
-                applicationModel.notifyObservers(UpdateReason.OPERATION_UPDATE);
+                applicationModel.notifyObservers(new Update(UpdateReason.OPERATION_REMOVED, optional.get()));
             }
         });
 
@@ -84,7 +85,8 @@ public final class ApplicationController implements Observer {
         });
 
         // Load operations
-        applicationModel.notifyObservers(UpdateReason.OPERATION_UPDATE);
+        // TODO: Update
+        // applicationModel.notifyObservers(UpdateReason.OPERATION_UPDATE);
     }
 
     /**
@@ -116,15 +118,20 @@ public final class ApplicationController implements Observer {
      */
     @Override
     public void update(Observable observable, Object arg) {
-        UpdateReason reason = (UpdateReason) arg;
+        Update update = (Update) arg;
 
-        switch (reason) {
-            case OPERATION_UPDATE:
-                List<Operation> operationList = applicationModel.getRepository().selectAll();
-                List<Operation> sortedList = new ArrayList<>(operationList);
-                Collections.sort(sortedList);
+        switch (update.getReason()) {
+            case OPERATION_ADDED:
+                Operation added = (Operation) update.getArguments()[0];
+                operationListView.getItems().add(added);
 
-                this.operationListView.getItems().setAll(sortedList);
+                Collections.sort(operationListView.getItems());
+                break;
+            case OPERATION_REMOVED:
+                Operation removed = (Operation) update.getArguments()[0];
+                operationListView.getItems().remove(removed);
+
+                Collections.sort(operationListView.getItems());
                 break;
             default:
                 break;

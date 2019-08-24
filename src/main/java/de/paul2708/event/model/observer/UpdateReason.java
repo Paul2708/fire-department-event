@@ -9,7 +9,14 @@ package de.paul2708.event.model.observer;
 public enum UpdateReason {
 
     /**
-     * An operation was added or removed.
+     * An operation was added.
+     * Arguments: added operation
      */
-    OPERATION_UPDATE
+    OPERATION_ADDED,
+
+    /**
+     * An operation was removed.
+     * Arguments: removed operation
+     */
+    OPERATION_REMOVED
 }
