@@ -21,6 +21,12 @@ public enum UpdateReason {
     OPERATION_REMOVED,
 
     /**
+     * All operations got updated.
+     * Arguments: sorted list of operations
+     */
+    OPERATION_UPDATE,
+
+    /**
      * The model was started.
      * Arguments: sorted list of operations
      */

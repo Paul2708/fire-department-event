@@ -62,7 +62,9 @@ public final class DefaultApplicationModel extends ApplicationModel {
             }
         }
 
-        // TODO: Update
-        // notifyObservers(UpdateReason.OPERATION_UPDATE);
+        List<Operation> operations = new ArrayList<>(repository.selectAll());
+        Collections.sort(operations);
+
+        notifyObservers(new Update(UpdateReason.OPERATION_UPDATE, operations));
     }
 }

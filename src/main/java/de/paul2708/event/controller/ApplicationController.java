@@ -130,11 +130,13 @@ public final class ApplicationController implements Observer {
 
                 Collections.sort(operationListView.getItems());
                 break;
-            case STARTUP:
-                List<Operation> operations = (List<Operation>) update.getArguments()[0];
-
+            case OPERATION_UPDATE:
                 operationListView.getItems().clear();
-                operationListView.getItems().addAll(operations);
+                operationListView.getItems().addAll((List<Operation>) update.getArguments()[0]);
+                break;
+            case STARTUP:
+                operationListView.getItems().clear();
+                operationListView.getItems().addAll((List<Operation>) update.getArguments()[0]);
                 break;
             default:
                 break;
