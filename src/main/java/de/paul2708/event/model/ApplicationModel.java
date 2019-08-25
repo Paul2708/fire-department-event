@@ -21,14 +21,6 @@ public abstract class ApplicationModel extends Observable {
     public abstract Repository getRepository();
 
     /**
-     * Get the current operation.
-     * If none operation is active, null will be returned.
-     *
-     * @return operation or null if none is present
-     */
-    public abstract Operation getCurrentOperation();
-
-    /**
      * Start the model and notify the observers.
      */
     public abstract void start();
@@ -37,7 +29,7 @@ public abstract class ApplicationModel extends Observable {
      * Update all unfinished operations by a diff of time and notify the observers.
      *
      * @param operation changed operation (every operation that follows this will be updated)
-     * @param diff difference in milliseconds
+     * @param diff      difference in milliseconds
      */
     public abstract void update(Operation operation, long diff);
 

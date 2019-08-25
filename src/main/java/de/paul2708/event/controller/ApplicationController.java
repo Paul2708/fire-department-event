@@ -73,7 +73,7 @@ public final class ApplicationController implements Observer {
             editOperationView.show(controller -> getSelectedOperation().ifPresent(controller::setOperation));
         });
         MenuItem deleteItem = new MenuItem("Entfernen");
-        deleteItem.setOnAction(event ->  {
+        deleteItem.setOnAction(event -> {
             Optional<Operation> optional = getSelectedOperation();
 
             if (optional.isPresent()) {
@@ -241,7 +241,7 @@ public final class ApplicationController implements Observer {
         long seconds = TimeUnit.MILLISECONDS.toSeconds(duration)
                 - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration));
 
-        return new long[] { hours, minutes, seconds };
+        return new long[]{hours, minutes, seconds};
     }
 
     /**

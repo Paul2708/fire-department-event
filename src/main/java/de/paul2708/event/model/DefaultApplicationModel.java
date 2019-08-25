@@ -39,17 +39,6 @@ public final class DefaultApplicationModel extends ApplicationModel {
     }
 
     /**
-     * Get the current operation.
-     * If none operation is active, null will be returned.
-     *
-     * @return operation or null if none is present
-     */
-    @Override
-    public Operation getCurrentOperation() {
-        return currentOperation;
-    }
-
-    /**
      * Start the model and notify the observers.
      */
     @Override
@@ -157,7 +146,7 @@ public final class DefaultApplicationModel extends ApplicationModel {
     /**
      * Check if two operations changed.
      *
-     * @param current current operation
+     * @param current    current operation
      * @param calculated calculated operation
      * @return true if they changed, otherwise false
      */

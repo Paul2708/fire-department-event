@@ -20,8 +20,6 @@ import java.util.function.Consumer;
  */
 public abstract class AbstractView<T> {
 
-    // TODO: Fix layouts
-
     private final String path;
     private final String title;
 

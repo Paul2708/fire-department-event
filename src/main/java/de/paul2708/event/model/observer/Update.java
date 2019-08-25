@@ -13,7 +13,7 @@ public final class Update {
     /**
      * Create a new update.
      *
-     * @param reason update reason
+     * @param reason    update reason
      * @param arguments passed arguments
      */
     public Update(UpdateReason reason, Object... arguments) {

@@ -60,7 +60,7 @@ public final class AddOperationController {
 
         // TODO: Add additional checks
 
-        long timestamp = 0;
+        long timestamp;
         try {
             timestamp = Operation.DATE_FORMAT.parse(timeField.getText()).getTime();
         } catch (ParseException e) {
@@ -86,7 +86,7 @@ public final class AddOperationController {
      *
      * @param path path
      */
-    public void setPath(String path) {
+    void setPath(String path) {
         pathField.setText(path);
     }
 

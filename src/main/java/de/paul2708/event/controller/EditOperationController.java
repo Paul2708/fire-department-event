@@ -57,7 +57,7 @@ public final class EditOperationController {
 
         // TODO: Add additional checks
 
-        long timestamp = 0;
+        long timestamp;
         try {
             timestamp = Operation.DATE_FORMAT.parse(newTimeField.getText()).getTime();
         } catch (ParseException e) {
