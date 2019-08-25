@@ -149,13 +149,9 @@ public final class ApplicationController implements Observer {
                 if (countdown == -1) {
                     countdownField.setText("keine nächster Einsatz bekannt");
                 } else {
+                    long[] timeUnits = getHourMinuteSecond(countdown);
                     String formattedCountdown = String.format("%02d Stunden %02d Minuten %02d Sekunden",
-                            TimeUnit.MILLISECONDS.toHours(countdown),
-                            TimeUnit.MILLISECONDS.toMinutes(countdown)
-                                    - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(countdown)),
-                            TimeUnit.MILLISECONDS.toSeconds(countdown)
-                                    - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(countdown))
-                    );
+                            timeUnits[0], timeUnits[1], timeUnits[2]);
 
                     countdownField.setText(formattedCountdown);
                 }
