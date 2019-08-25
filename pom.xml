@@ -10,11 +10,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>4.12</junit.version>
     </properties>
 
-    <name>nitrado-odyssey</name>
-    <description>Minecraft Odyssey-Project</description>
-    <inceptionYear>2018</inceptionYear>
+    <name>fire-department-event</name>
+    <description>An application to organize and control fire department operations for children.</description>
+    <inceptionYear>2019</inceptionYear>
 
     <developers>
         <developer>
@@ -22,6 +23,16 @@
             <email>paul.hoger@gmx.net</email>
         </developer>
     </developers>
+
+    <dependencies>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -35,7 +46,31 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <!-- Assembly -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>de.paul2708.event.Launcher</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <finalName>fire-department-event</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
 </project>
