@@ -3,12 +3,14 @@ package de.paul2708.event.controller;
 import de.paul2708.event.model.ApplicationModel;
 import de.paul2708.event.model.Operation;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * This class controls {@link EditOperationController} and edits an existing operation.
@@ -20,32 +22,23 @@ public final class EditOperationController {
     private Operation operation;
 
     @FXML
-    private TextField timeField;
+    private TextField nameField;
 
     @FXML
-    private DatePicker datePicker;
+    private TextField oldTimeField;
 
     @FXML
-    private ComboBox<Integer> hoursBox;
-
-    @FXML
-    private ComboBox<Integer> minutesBox;
+    private TextField newTimeField;
 
     @FXML
     private Button button;
 
     /**
-     * Initialize the time boxes with hours and minutes.
+     * Set the current date as sample date.
      */
     @FXML
     private void initialize() {
-        for (int i = 1; i <= 23; i++) {
-            hoursBox.getItems().add(i);
-        }
-
-        for (int i = 0; i <= 59; i++) {
-            minutesBox.getItems().add(i);
-        }
+        newTimeField.setText(Operation.DATE_FORMAT.format(new Date()));
     }
 
     /**
@@ -54,9 +47,7 @@ public final class EditOperationController {
     @FXML
     public void edit() {
         try {
-            requireValue(datePicker.getValue());
-            requireValue(hoursBox.getValue());
-            requireValue(minutesBox.getValue());
+            requireValue(newTimeField.getText());
         } catch (IllegalArgumentException e) {
             // TODO: Better error handling
             new Alert(Alert.AlertType.ERROR, "Bitte alle Felder ausfüllen.", ButtonType.OK)
@@ -66,11 +57,14 @@ public final class EditOperationController {
 
         // TODO: Add additional checks
 
-        LocalDateTime localDateTime = LocalDateTime.of(
-                datePicker.getValue(),
-                LocalTime.of(hoursBox.getValue(), minutesBox.getValue())
-        );
-        long timestamp = localDateTime.toInstant(ZoneOffset.ofHours(2)).toEpochMilli();
+        long timestamp = 0;
+        try {
+            timestamp = Operation.DATE_FORMAT.parse(newTimeField.getText()).getTime();
+        } catch (ParseException e) {
+            new Alert(Alert.AlertType.ERROR, "Das Format stimmt nicht.", ButtonType.OK)
+                    .showAndWait();
+            return;
+        }
 
         // Apply diff
         ApplicationModel.by().update(operation, timestamp - operation.getExecutionTime());
@@ -88,7 +82,8 @@ public final class EditOperationController {
     public void setOperation(Operation operation) {
         this.operation = operation;
 
-        timeField.setText(operation.getFormattedTime());
+        nameField.setText(operation.getName());
+        oldTimeField.setText(operation.getFormattedTime());
     }
 
     /**
