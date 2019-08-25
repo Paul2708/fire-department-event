@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 import java.util.*;
@@ -160,14 +162,12 @@ public final class ApplicationController implements Observer {
             case OPERATION_SWITCH:
                 Operation operation = (Operation) update.getArguments()[0];
 
-                // TODO: Play sound
+                playSound(operation.getPath());
                 System.out.println("Play sound: " + operation.getPath());
                 break;
             case CURRENT_OPERATION_UPDATE:
                 Operation current = (Operation) update.getArguments()[0];
                 Operation next = (Operation) update.getArguments()[1];
-
-                System.out.println("Called");
 
                 if (current == null) {
                     nameField.setText("aktuell läuft kein Einsatz");
@@ -193,6 +193,18 @@ public final class ApplicationController implements Observer {
      */
     private Optional<Operation> getSelectedOperation() {
         return Optional.ofNullable(operationListView.getSelectionModel().getSelectedItem());
+    }
+
+    /**
+     * Play a sound by path.
+     *
+     * @param path absolute file path to mp3
+     */
+    private static void playSound(String path) {
+        Media pick = new Media(new File(path).toPath().toUri().toString());
+        MediaPlayer player = new MediaPlayer(pick);
+
+        player.play();
     }
 
     /**

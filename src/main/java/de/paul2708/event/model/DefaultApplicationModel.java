@@ -133,15 +133,19 @@ public final class DefaultApplicationModel extends ApplicationModel {
         Operation calcCurrentOperation = null;
         Operation calcNextOperation = null;
 
-        for (int i = 0; i < operations.size(); i++) {
-            if (operations.get(i).getExecutionTime() < System.currentTimeMillis()) {
-                calcCurrentOperation = operations.get(i);
-                calcNextOperation = (i < operations.size() - 1) ? operations.get(i + 1) : null;
+        for (Operation operation : operations) {
+            if (operation.getExecutionTime() < System.currentTimeMillis()) {
+                calcCurrentOperation = operation;
+            }
+        }
+        for (Operation operation : operations) {
+            if (operation.getExecutionTime() >= System.currentTimeMillis()) {
+                calcNextOperation = operation;
+                break;
             }
         }
 
         if (changed(currentOperation, calcCurrentOperation) || changed(nextOperation, calcNextOperation)) {
-
             notifyObservers(new Update(UpdateReason.CURRENT_OPERATION_UPDATE, calcCurrentOperation,
                     calcNextOperation));
         }
