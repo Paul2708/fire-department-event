@@ -159,6 +159,14 @@ public final class ApplicationController implements Observer {
 
                     countdownField.setText(formattedCountdown);
                 }
+
+                break;
+            case OPERATION_SWITCH:
+                Operation operation = (Operation) update.getArguments()[0];
+
+                // TODO: Play sound
+                System.out.println("Play sound: " + operation.getPath());
+                break;
             default:
                 break;
         }

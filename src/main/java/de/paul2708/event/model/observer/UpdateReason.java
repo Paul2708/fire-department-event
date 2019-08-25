@@ -37,5 +37,11 @@ public enum UpdateReason {
      * Update the countdown.
      * Arguments: -1 if none next operation is known otherwise seconds till next operation
      */
-    UPDATE_COUNTDOWN
+    UPDATE_COUNTDOWN,
+
+    /**
+     * Next operation started.
+     * Arguments: next operation
+     */
+    OPERATION_SWITCH
 }

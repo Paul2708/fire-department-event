@@ -52,15 +52,25 @@ public final class DefaultApplicationModel extends ApplicationModel {
 
         new Thread(() -> {
             while (true) {
+                List<Operation> list = new ArrayList<>(repository.selectAll());
+                Collections.sort(list);
+
+                updateLocalOperations(list);
+
                 if (nextOperation == null) {
                     notifyObservers(new Update(UpdateReason.UPDATE_COUNTDOWN, -1L));
                 } else {
                     long diff = nextOperation.getExecutionTime() - System.currentTimeMillis();
+
+                    if (diff < 500) {
+                        notifyObservers(new Update(UpdateReason.OPERATION_SWITCH, nextOperation));
+                    }
+
                     notifyObservers(new Update(UpdateReason.UPDATE_COUNTDOWN, diff));
                 }
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(750);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
