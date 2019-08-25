@@ -43,5 +43,11 @@ public enum UpdateReason {
      * Next operation started.
      * Arguments: next operation
      */
-    OPERATION_SWITCH
+    OPERATION_SWITCH,
+
+    /**
+     * Current and/or next operation changed.
+     * Arguments: current operation, next operation. Both can be null.
+     */
+    CURRENT_OPERATION_UPDATE
 }

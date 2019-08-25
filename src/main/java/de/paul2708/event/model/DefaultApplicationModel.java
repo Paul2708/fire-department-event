@@ -39,6 +39,17 @@ public final class DefaultApplicationModel extends ApplicationModel {
     }
 
     /**
+     * Get the current operation.
+     * If none operation is active, null will be returned.
+     *
+     * @return operation or null if none is present
+     */
+    @Override
+    public Operation getCurrentOperation() {
+        return currentOperation;
+    }
+
+    /**
      * Start the model and notify the observers.
      */
     @Override
@@ -62,7 +73,7 @@ public final class DefaultApplicationModel extends ApplicationModel {
                 } else {
                     long diff = nextOperation.getExecutionTime() - System.currentTimeMillis();
 
-                    if (diff < 500) {
+                    if (diff < 1000) {
                         notifyObservers(new Update(UpdateReason.OPERATION_SWITCH, nextOperation));
                     }
 
@@ -70,7 +81,7 @@ public final class DefaultApplicationModel extends ApplicationModel {
                 }
 
                 try {
-                    Thread.sleep(750);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -119,15 +130,41 @@ public final class DefaultApplicationModel extends ApplicationModel {
      * @param operations sorted list of all operations
      */
     private void updateLocalOperations(List<Operation> operations) {
-        this.nextOperation = null;
-        this.currentOperation = null;
+        Operation calcCurrentOperation = null;
+        Operation calcNextOperation = null;
 
         for (int i = 0; i < operations.size(); i++) {
-            if (operations.get(i).getExecutionTime() >= System.currentTimeMillis()) {
-                this.nextOperation = operations.get(i);
-                this.currentOperation = i > 0 ? operations.get(i - 1) : null;
+            if (operations.get(i).getExecutionTime() < System.currentTimeMillis()) {
+                calcCurrentOperation = operations.get(i);
+                calcNextOperation = (i < operations.size() - 1) ? operations.get(i + 1) : null;
+            }
+        }
 
-                break;
+        if (changed(currentOperation, calcCurrentOperation) || changed(nextOperation, calcNextOperation)) {
+
+            notifyObservers(new Update(UpdateReason.CURRENT_OPERATION_UPDATE, calcCurrentOperation,
+                    calcNextOperation));
+        }
+
+        this.currentOperation = calcCurrentOperation;
+        this.nextOperation = calcNextOperation;
+    }
+
+    /**
+     * Check if two operations changed.
+     *
+     * @param current current operation
+     * @param calculated calculated operation
+     * @return true if they changed, otherwise false
+     */
+    private static boolean changed(Operation current, Operation calculated) {
+        if (current == null) {
+            return calculated != null;
+        } else {
+            if (calculated == null) {
+                return true;
+            } else {
+                return !current.equals(calculated);
             }
         }
     }

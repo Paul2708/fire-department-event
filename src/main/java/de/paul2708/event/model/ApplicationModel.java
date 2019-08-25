@@ -21,6 +21,14 @@ public abstract class ApplicationModel extends Observable {
     public abstract Repository getRepository();
 
     /**
+     * Get the current operation.
+     * If none operation is active, null will be returned.
+     *
+     * @return operation or null if none is present
+     */
+    public abstract Operation getCurrentOperation();
+
+    /**
      * Start the model and notify the observers.
      */
     public abstract void start();

@@ -167,6 +167,24 @@ public final class ApplicationController implements Observer {
                 // TODO: Play sound
                 System.out.println("Play sound: " + operation.getPath());
                 break;
+            case CURRENT_OPERATION_UPDATE:
+                Operation current = (Operation) update.getArguments()[0];
+                Operation next = (Operation) update.getArguments()[1];
+
+                System.out.println("Called");
+
+                if (current == null) {
+                    nameField.setText("aktuell läuft kein Einsatz");
+                    durationField.setText("-/-");
+                } else {
+                    nameField.setText(current.getName());
+
+                    long duration = next != null ? next.getExecutionTime() - current.getExecutionTime() : -1;
+
+                    durationField.setText(duration == -1 ? "open end"
+                            : formatDuration(getHourMinuteSecond(duration)));
+                }
+                break;
             default:
                 break;
         }
@@ -179,6 +197,43 @@ public final class ApplicationController implements Observer {
      */
     private Optional<Operation> getSelectedOperation() {
         return Optional.ofNullable(operationListView.getSelectionModel().getSelectedItem());
+    }
+
+    /**
+     * Get the time units in a formatted string.
+     *
+     * @param timeUnits time units by {@link #getHourMinuteSecond(long)}
+     * @return formatted string
+     */
+    private static String formatDuration(long[] timeUnits) {
+        String result = "";
+        if (timeUnits[0] != 0) {
+            result += timeUnits[0] + " Stunden";
+        }
+        if (timeUnits[1] != 0) {
+            result += " " + timeUnits[1] + " Minuten";
+        }
+        if (timeUnits[2] != 0) {
+            result += " " + timeUnits[2] + " Sekunden";
+        }
+
+        return result;
+    }
+
+    /**
+     * Get the hours, minutes and seconds by duration in milliseconds.
+     *
+     * @param duration duration in milliseconds
+     * @return long array with hours, minutes and seconds
+     */
+    private static long[] getHourMinuteSecond(long duration) {
+        long hours = TimeUnit.MILLISECONDS.toHours(duration);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
+                - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(duration));
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(duration)
+                - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration));
+
+        return new long[] { hours, minutes, seconds };
     }
 
     /**
