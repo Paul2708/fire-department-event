@@ -22,10 +22,10 @@ The application is written in Java and is based on [JavaFX](https://openjfx.io).
 
 ## Screenshots
 ### Empty list of operations
-![image1](https://github.com/adam-p/markdown-here/raw/master/.github/images/image1.png "Empty list")
+![image1](https://github.com/paul2708/fire-department-event/raw/master/.github/images/image1.png "Empty list")
 
 ### Sample list of operations
-![image2](https://github.com/adam-p/markdown-here/raw/master/.github/images/image2.png "Full list")
+![image2](https://github.com/paul2708/fire-department-event/raw/master/.github/images/image2.png "Full list")
 ## Development
 Trigger warning: The code is not as clean as it should be.
 
