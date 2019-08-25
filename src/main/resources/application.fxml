@@ -88,9 +88,9 @@
                                                         </rowConstraints>
                                                          <children>
                                                             <Label text="Name:" />
-                                                            <TextField fx:id="nameField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="Katze steckt auf Baum fest" GridPane.columnIndex="1" />
+                                                            <TextField fx:id="nameField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="aktuell läuft kein Einsatz" GridPane.columnIndex="1" />
                                                             <Label text="Dauer:" GridPane.rowIndex="1" />
-                                                            <TextField fx:id="durationField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="00 Stunden 00 Minuten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="durationField" alignment="CENTER" editable="false" prefHeight="26.0" prefWidth="173.0" text="-/-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                          </children>
                                                       </GridPane>
                                                    </children>

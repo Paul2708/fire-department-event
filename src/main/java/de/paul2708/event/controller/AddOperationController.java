@@ -6,12 +6,14 @@ import de.paul2708.event.model.observer.Update;
 import de.paul2708.event.model.observer.UpdateReason;
 import de.paul2708.event.model.repository.Repository;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * This class represents the controller for {@link de.paul2708.event.view.AddOperationView} and adds the operation
@@ -28,29 +30,17 @@ public final class AddOperationController {
     private TextField nameField;
 
     @FXML
-    private DatePicker datePicker;
-
-    @FXML
-    private ComboBox<Integer> hoursBox;
-
-    @FXML
-    private ComboBox<Integer> minutesBox;
+    private TextField timeField;
 
     @FXML
     private Button button;
 
     /**
-     * Initialize the time boxes with hours and minutes.
+     * Set the current date as sample date.
      */
     @FXML
     private void initialize() {
-        for (int i = 1; i <= 23; i++) {
-            hoursBox.getItems().add(i);
-        }
-
-        for (int i = 0; i <= 59; i++) {
-            minutesBox.getItems().add(i);
-        }
+        timeField.setText(Operation.DATE_FORMAT.format(new Date()));
     }
 
     /**
@@ -60,9 +50,7 @@ public final class AddOperationController {
     private void add() {
         try {
             requireValue(nameField.getText());
-            requireValue(datePicker.getValue());
-            requireValue(hoursBox.getValue());
-            requireValue(minutesBox.getValue());
+            requireValue(timeField.getText());
         } catch (IllegalArgumentException e) {
             // TODO: Better error handling
             new Alert(Alert.AlertType.ERROR, "Bitte alle Felder ausfüllen.", ButtonType.OK)
@@ -72,11 +60,14 @@ public final class AddOperationController {
 
         // TODO: Add additional checks
 
-        LocalDateTime localDateTime = LocalDateTime.of(
-                datePicker.getValue(),
-                LocalTime.of(hoursBox.getValue(), minutesBox.getValue())
-        );
-        long timestamp = localDateTime.toInstant(ZoneOffset.ofHours(2)).toEpochMilli();
+        long timestamp = 0;
+        try {
+            timestamp = Operation.DATE_FORMAT.parse(timeField.getText()).getTime();
+        } catch (ParseException e) {
+            new Alert(Alert.AlertType.ERROR, "Das Format stimmt nicht.", ButtonType.OK)
+                    .showAndWait();
+            return;
+        }
 
         // Insert operation
         Operation operation = new Operation(pathField.getText(), nameField.getText(), timestamp);

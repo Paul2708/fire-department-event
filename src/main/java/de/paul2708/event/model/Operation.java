@@ -13,7 +13,10 @@ import java.util.Objects;
  */
 public final class Operation implements Serializable, Comparable<Operation> {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
+    /**
+     * Date format to represent operation execution time.
+     */
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy - HH:mm");
 
     private final String path;
     private final String name;
