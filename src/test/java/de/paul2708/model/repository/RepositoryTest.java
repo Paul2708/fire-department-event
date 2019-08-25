@@ -5,6 +5,7 @@ import de.paul2708.event.model.repository.FileRepository;
 import de.paul2708.event.model.repository.Repository;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public final class RepositoryTest {
      * Create a new repository and operation.
      */
     @Before
+    @Ignore
     public void setUp() {
         this.repository = new FileRepository();
 
@@ -39,6 +41,7 @@ public final class RepositoryTest {
      * Test if insertion works fine.
      */
     @Test
+    @Ignore
     public void testInsert() {
         // Insert
         repository.insert(operation);
@@ -57,6 +60,7 @@ public final class RepositoryTest {
      * Test if an operation got deleted correctly.
      */
     @Test
+    @Ignore
     public void testDelete() {
         // Insert
         repository.insert(operation);
@@ -72,6 +76,7 @@ public final class RepositoryTest {
      * Test if the update value got fetched correctly.
      */
     @Test
+    @Ignore
     public void testUpdate() {
         // Insert
         repository.insert(operation);
@@ -90,6 +95,7 @@ public final class RepositoryTest {
      * Check if the collection is unmodifiable.
      */
     @Test(expected = UnsupportedOperationException.class)
+    @Ignore
     public void testUnmodifiableList() {
         repository.selectAll().add(operation);
     }
@@ -98,6 +104,7 @@ public final class RepositoryTest {
      * Clear the repository after each test case.
      */
     @After
+    @Ignore
     public void tearDown() {
         for (Operation operation : repository.selectAll()) {
             repository.delete(operation);
